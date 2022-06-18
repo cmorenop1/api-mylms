@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+
 /**
  * Module dependencies.
  */
@@ -8,59 +9,6 @@ var app = require('../app');
 var debug = require('debug')('sample:server');
 var http = require('http');
 
-//firebase
-const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
-const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
-const { create } = require('domain');
-
-initializeApp();
-
-const db = getFirestore();
-
-const docRef = db.collection('users').doc('alovelace');
-
-/**
- * Add data
- Cloud Firestore stores data in Documents, which are stored in Collections.
- Cloud Firestore creates collections and documents implicitly the first time you add data to the document. 
- You do not need to explicitly create collections or documents.
-
-Create a new collection and a document using the following example code.
- * 
- */
-
-async function createCollection() {
-
-  await docRef.set({
-    first: 'Ada',
-    last: 'Lovelace',
-    born: 1815
-  });
-}
-createCollection()
-
-
-/**
- * Now add another document to the users collection. 
- * Notice that this document includes a key-value pair (middle name) that does not appear
- *  in the first document. Documents in a collection can contain different sets of information.
- * 
- */
-
-async function createAnotherCollection(){
-
-  const aTuringRef = db.collection('users').doc('aturing');
-  
-  await aTuringRef.set({
-    'first': 'Alan',
-    'middle': 'Mathison',
-    'last': 'Turing',
-    'born': 1912
-  });
-
-}
-
-createAnotherCollection()
 
 
 /**
@@ -81,7 +29,7 @@ var server = http.createServer(app);
  */
 
 server.listen(port);
-console.log(`server running @ port ${port}`)
+console.log(`server running @ http://localhost:${port}`)
 server.on('error', onError);
 server.on('listening', onListening);
 
